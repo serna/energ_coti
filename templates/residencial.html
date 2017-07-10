@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block aside %}
+	<aside style="padding-top: 20px">
+		<ul class="list-group">
+	        <li class="list-group-item"><a href="/promedio_anual_kwhr/">Promedio anual (KWhr)</a></li>
+	        <li class="list-group-item"><a href="/nuevo_alumnos">Ultimo recibo (KWhr)</a></li>
+	        <li class="list-group-item"><a href="/otor">Ultimo recibo ($)</a></li>
+	    </ul>
+	</aside>
+{% endblock %}
+
+{% block content %}
+		<h2>Cotizador servicio residencial</h2>
+
+		{% block buscar %}
+		{% endblock %}
+
+		{% block resultado %}
+    	{% endblock %}
+
+    	{% block subcontent %}
+    	{% endblock %}
+
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

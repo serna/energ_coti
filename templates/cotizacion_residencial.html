@@ -1,0 +1,26 @@
+{% extends "residencial.html" %}
+{% block resultado %}
+	<table class = "table table-striped">
+		<thead class="thead-inverse">
+			<tr>
+				<th>No. de paneles</th>
+				<th>Pago a CFE</th>
+				<th>Inversión</th>
+				<th>Ahorro</th>
+				<th>ROI</th>
+				<th>Diferencia</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			{% for item in lista %}
+				<tr>
+				{% for subitem in item%}
+					<td> {{subitem}} </td>
+				{%endfor%}
+				<td><a href="cotizacion-residencial/{{item.0}}" > imprimir</a></td>
+		  		</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
