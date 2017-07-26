@@ -1,6 +1,6 @@
-{% extends "residencial.html" %}
-{% block resultado %}
-	<h2>{{titulo}} </h2>
+ {% extends 'siad/consultas.html' %}
+
+{% block subcontent %}
 	<table class = "table table-striped">
 		<thead class="thead-inverse">
 			<tr>
@@ -19,7 +19,7 @@
 				{% for subitem in item%}
 					<td> {{subitem}} </td>
 				{%endfor%}
-				<td><a href="cotizacion-residencial/{{item.0}}" > imprimir</a></td>
+				{# <td><a href="cotizacion-residencial/{{item.0}}" > imprimir</a></td> #}
 		  		</tr>
 			{% endfor %}
 		</tbody>

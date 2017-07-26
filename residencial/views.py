@@ -15,11 +15,12 @@ def prom_anual_kwhr(request):
 			b5 = form.cleaned_data['consumo_5to_bimestre']
 			b6 = form.cleaned_data['consumo_6to_bimestre']
 			promedio = (b1+b2+b3+b4+b5+b6)/6.0
-			context = {"mensaje":"Hemos recibido la informacion, tu consumo promedio anual es de: ",
-						"nombre": promedio,
+			print("El promedio anual es de ",promedio)
+			context = {	"titulo": "El promedio de consumo bimestral es de " + str(round(promedio,2))+" kWh",
+						'lista':rut.calculaResidencial(promedio),
 						}
 			lista = [1,2,3,4,5,6,7,8,9]
-			return render(request,"cotizacion_residencial.html", {'lista':rut.calculaResidencial(promedio)})
+			return render(request,"cotizacion_residencial.html", context)
 	else:
 		form = servicio_residencial_form()
 
