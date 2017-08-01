@@ -1,7 +1,7 @@
 # Her are the definition of all tha functions that would be doing the maths
 import numpy as np
 
-
+from residencial.models import Residencial
 def lista():
 	return ["Cesar","Oscar"]
 
@@ -42,18 +42,25 @@ def noCeldasRes(consumo):
 	"""
 	return consumo/75.0
 	
-def pagoCFE(consumption):
+def pagoCFE(consumption,tarifa):
 	""" Computes the charge done to the user according to CFE rates
 	    powerDemand [int]: the power used bimonthly by the user
 	"""
-	basicCost =0.793#0.793 # energy cost according to CFE
-	middleCost = 0.956#0.956
-	excessCost = 2.802#2.802
-	DACcost = 4.370
-	iva = 0.16
+	obj = Residencial.objects.filter(tarifa=tarifa)
+	#print("TARIFA: " + str(tarifa))
+	#print("MENSAJE: " + str(obj) + " " + str(tarifa) + " " + str(type(tarifa))) 
+	basicCost = float(obj[0].costo_basico)
+	middleCost = float(obj[0].costo_intermedio)
+	excessCost = float(obj[0].costo_excedente)
+	DACcost = float(obj[0].costo_DAC)
+	rango_DAC = float(obj[0].rango_excedente)
+
+
+
+	iva = 0.0
 	powerDemand = consumption
-	if powerDemand>500:
- 		pagoFijo = 99.84
+	if powerDemand>rango_DAC:
+ 		pagoFijo = float(obj[0].cargo_fijo)
  		total = pagoFijo + powerDemand*DACcost
  		#return pagoFijo + powerDemand*DACcost
 	else:
@@ -98,17 +105,17 @@ def pagoCFEComercial(consumption):
 	#print(consumption,total)
 	return total*(1.0+iva)
 
-def calculaResidencial(consumo):
+def calculaResidencial(consumo,tarifa):
 	consumo = int(consumo)
-	pagoActual = pagoCFE(consumo)
+	pagoActual = pagoCFE(consumo,tarifa)
 	pagoAnterior = pagoActual
 	#print "nCell\tpagoCFE \tInvers\tAhorro\tROI"
 	nCells = 0 
 	datos = []
 	while consumo>0:
-		ahorro = pagoActual-pagoCFE(consumo)
+		ahorro = pagoActual-pagoCFE(consumo,tarifa)
 		inver = inversion(nCells)[0]
-		pago = pagoCFE(consumo)
+		pago = pagoCFE(consumo,tarifa)
 		if ahorro != 0:
 			datos.append([str(nCells),str(round(pago,2)),str(round(inver,2)),str(round(ahorro,2)),str(round((inver/ahorro)/6.0,2)),str(round(pagoAnterior-pago,2))])
 		else:

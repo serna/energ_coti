@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Tarifa
+from .models import Residencial
 
-admin.site.register(Tarifa)
+admin.site.register(Residencial)
