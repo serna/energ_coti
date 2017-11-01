@@ -15,14 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from residencial.views import domestico, get_name,start_page,prom_anual_kwhr
-
+from residencial.views import domestico, get_name,start_page,prom_anual_kwhr,cotizacion_nPaneles,cotizacion_nPaneles2
+#from residencial.modules import rutinas as rut
+#rut.buildInvertersDict()
 urlpatterns = [
     url(r'^$',start_page,name = 'start_page'),
     url(r'^admin/', admin.site.urls),
     url(r'^residencial/$', domestico, name = "domestico"),
     url(r'^get_name/$', get_name, name = "get_name"),
     url(r'^promedio_anual_kwhr/$', prom_anual_kwhr, name = "prom_anual_kwhr"),
+    url(r'^promedio_anual_kwhr/cotizacion-residencial/(?P<nPaneles>[0-9]{5})$', cotizacion_nPaneles2, name = "cotizacion_nPaneles"),
     #url(r'^get_name/mensaje', get_name, name = "get_name"),
     #url(r'^your_name/', your_name, name = "your_name"),
 ]

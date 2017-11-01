@@ -32,6 +32,4 @@ class servicio_residencial_form(forms.Form):
 	consumo_4to_bimestre = forms.IntegerField()
 	consumo_5to_bimestre = forms.IntegerField()
 	consumo_6to_bimestre = forms.IntegerField()
-
-
 	

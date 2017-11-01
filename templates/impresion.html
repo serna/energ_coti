@@ -4,9 +4,11 @@
 	<table class = "table table-striped">
 		<thead class="thead-inverse">
 			<tr>
-				<th>No. de paneles</th>
-				<th>Pago a CFE</th>
-				<th>Ahorro</th>
+				{% for item in headersList%}
+					<th>{{item}}</th>
+				{%endfor%}
+				
+				
 				
 			</tr>
 		</thead>
@@ -15,9 +17,9 @@
 				<tr>
 				
 				{% for subitem in item%}
-					<td> {{subitem}} </td>
+					<td> {{subitem}}</td>
 				{%endfor%}
-				<td><a href="cotizacion-residencial/{{item.0}}" > imprimir</a></td>
+				
 		  		</tr>
 			{% endfor %}
 		</tbody>
