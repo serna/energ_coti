@@ -77,6 +77,7 @@ class Instalacion(models.Model):
 class Configuracion(models.Model):
 	""" this model is used for thee economic configuration"""
 	nombre = models.CharField(max_length=30)
+	tipo_cambio = models.DecimalField(max_digits=4,decimal_places=2)
 	utilidad = models.DecimalField(max_digits=3,decimal_places=2)
 	indirectos = models.DecimalField(max_digits=3,decimal_places=2)
 	IVA = models.DecimalField(max_digits=3,decimal_places=2)

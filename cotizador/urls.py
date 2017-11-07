@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^residencial/$', domestico, name = "domestico"),
     url(r'^get_name/$', get_name, name = "get_name"),
     url(r'^promedio_anual_kwhr/$', prom_anual_kwhr, name = "prom_anual_kwhr"),
-    url(r'^promedio_anual_kwhr/cotizacion-residencial/(?P<nPaneles>[0-9]{5})$', cotizacion_nPaneles2, name = "cotizacion_nPaneles"),
+    url(r'^promedio_anual_kwhr/cotizacion-residencial/(?P<nPaneles>[0-9]{5})/(?P<ahorro>\d+\.\d+)$', cotizacion_nPaneles, name = "cotizacion_nPaneles"),
     #url(r'^get_name/mensaje', get_name, name = "get_name"),
     #url(r'^your_name/', your_name, name = "your_name"),
 ]

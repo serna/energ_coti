@@ -1,6 +1,6 @@
 {% extends "residencial.html" %}
 {% block resultado %}
-	<h2>{{titulo}} </h2>
+	<h2>{{mensaje}} </h2>
 	<table class = "table table-striped">
 		<thead class="thead-inverse">
 			<tr>
@@ -14,6 +14,31 @@
 		</thead>
 		<tbody>
 			{% for item in lista %}
+				<tr>
+				
+				{% for subitem in item%}
+					<td> {{subitem}}</td>
+				{%endfor%}
+				
+		  		</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<h2>{{titulo2}} </h2>
+	<table class = "table table-striped">
+		<thead class="thead-inverse">
+			<tr>
+				{% for item in headersList2%}
+					<th>{{item}}</th>
+				{%endfor%}
+				
+				
+				
+			</tr>
+		</thead>
+		<tbody>
+			{% for item in lista2 %}
 				<tr>
 				
 				{% for subitem in item%}

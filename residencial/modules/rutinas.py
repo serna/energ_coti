@@ -256,10 +256,11 @@ def buildInvertersDict():
 	invertersDict = {}
 	for item in entry:
 		invertersDict[item] = [item.costo,item.potencia_pico,item.costo_de_instalacion]
-	print('Se ha creado el diccionario de inversores')
+	#print('Se ha creado el diccionario de inversores')
 	return invertersDict
-invertersDict = buildInvertersDict()
-print("LOS INVERSORES SON",invertersDict)
+#invertersDict = buildInvertersDict()
+#invertersDict = {}
+#print("LOS INVERSORES SON",invertersDict)
 def nInverters2(powerDemand,panelPower):
     """ Return a dictionary of the number of panels by interter
         

@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from .forms import NameForm, servicio_residencial_form
 from .modules import rutinas as rut
 from .models import Proovedor, Instalacion, Configuracion, Configuracion2
-from reportlab.pdfgen import canvas
+#from reportlab.pdfgen import canvas
 
 from decimal import Decimal
 # Create your views here.
@@ -69,7 +69,7 @@ def get_name(request):
 		form = NameForm()
 
 	return render(request, 'name.html', {'form': form})
-def cotizacion_nPaneles(request,nPaneles):
+def cotizacion_nPaneles(request,nPaneles,ahorro):
 	# Defining the length of strings of phtotovoltaic modules
 	rowLength = 4
 	# Making th corresponding query
@@ -81,7 +81,7 @@ def cotizacion_nPaneles(request,nPaneles):
 	print(entry.panel)
 	# Defining corresponding variables
 	nPanels = int(nPaneles)
-	emptySpaces = [0,1,30] # the allowed empty panel spaces in inversors capacity
+	emptySpaces = range(30) # the allowed empty panel spaces in inversors capacity
 	ansDict1,costo1 = rut.generateSuma(nPanels,entry4.potencia_panel,emptySpaces[0])
 	ansDict = ansDict1
 	for i in emptySpaces[1:]:
@@ -150,25 +150,45 @@ def cotizacion_nPaneles(request,nPaneles):
 	indir = entry3.indirectos
 	IVA = entry3.IVA
 	
-	row = ['Subtotal','','',subtotalProd,'',subtotalInst]
+	row = ['Subtotal 1','','',subtotalProd,'',subtotalInst]
 	lista.append(row)
 	row = ['Utilidad','','',round(subtotalProd*util,2),'',round(subtotalInst*util,2)]
 	lista.append(row)
 	row = ['indirectos','','',round(subtotalProd*indir,2),'',round(subtotalInst*indir,2)]
 	lista.append(row)
+	totalProd = round(subtotalProd*(1+util+indir),2)
+	totalInst = round(subtotalInst*(1+util+indir),2)
+
+	row = ['Subtotal 2','','',totalProd,'',totalInst]
+	lista.append(row)
+		
 	row = ['IVA','','',round(subtotalProd*(1+util+indir)*IVA,2),'',round(subtotalInst*(1+util+indir)*IVA,2)]
 	lista.append(row)
+
 	totalProd = round(subtotalProd*(1+util+indir)*(1+IVA),2)
 	totalInst = round(subtotalInst*(1+util+indir)*(1+IVA),2)
 	row = ['TOTAL','','',totalProd,'',totalInst]
 	lista.append(row)
 	
-	
-	context = {
-		"mensaje": "Detalle de cotizacion de  " + str(nPanels) + " paneles.",
-		'headersList' : ['Descripcion','Cantidad','PU','Subtotal material','Mano de obra','Subtotal mano de obra'],
 
-		'lista' : lista
+	ahorro = float(ahorro)
+	print('el ahorro es de ',ahorro)
+	lista2 = []
+	TOTAL = totalProd+totalInst
+	TOTAL = float(TOTAL)
+	row = ['Inversion total',TOTAL]
+	lista2.append(row)
+	row = ['Retorno de inversion',TOTAL/ahorro]
+	lista2.append(row)
+	
+
+	context = {
+		"mensaje": "Detalle de cotizacion: " + str(nPanels) + " paneles.",
+		'headersList' : ['Descripcion','Cantidad','PU','Subtotal material','Mano de obra','Subtotal mano de obra'],
+		'lista' : lista,
+		'titulo2': 'Detalle financiero',
+		'headersList2' : ['Descripcion','Cantidad'],
+		'lista2': lista2,
 		
 
 	}
