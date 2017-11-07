@@ -258,7 +258,7 @@ def buildInvertersDict():
 		invertersDict[item] = [item.costo,item.potencia_pico,item.costo_de_instalacion]
 	#print('Se ha creado el diccionario de inversores')
 	return invertersDict
-#invertersDict = buildInvertersDict()
+invertersDict = buildInvertersDict()
 #invertersDict = {}
 #print("LOS INVERSORES SON",invertersDict)
 def nInverters2(powerDemand,panelPower):

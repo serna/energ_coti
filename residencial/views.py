@@ -69,7 +69,7 @@ def get_name(request):
 		form = NameForm()
 
 	return render(request, 'name.html', {'form': form})
-def cotizacion_nPaneles(request,nPaneles,ahorro):
+def cotizacion_nPaneles(request,nPaneles,ahorro,pagoCFE):
 	# Defining the length of strings of phtotovoltaic modules
 	rowLength = 4
 	# Making th corresponding query
@@ -176,14 +176,19 @@ def cotizacion_nPaneles(request,nPaneles,ahorro):
 	lista2 = []
 	TOTAL = totalProd+totalInst
 	TOTAL = float(TOTAL)
-	row = ['Inversion total',TOTAL]
+	row = ['Inversion total (USD)',TOTAL]
 	lista2.append(row)
-	row = ['Retorno de inversion',TOTAL/ahorro]
+	precioDolar = float(entry3.tipo_cambio)
+	row = ['Retorno de inversion (años)',round(TOTAL*precioDolar/ahorro/6.0,2)]
 	lista2.append(row)
-	
+	pagoCFE = float(pagoCFE)
+	row = ['Pago bimestral a CFE (pesos)',pagoCFE]
+	lista2.append(row)
+	row = ['Precio por KW (USD)', round(TOTAL/(float(entry4.potencia_panel)*nPanels/1000),2)]
+	lista2.append(row)
 
 	context = {
-		"mensaje": "Detalle de cotizacion: " + str(nPanels) + " paneles.",
+		"titulo": "Detalle de cotizacion: " + str(nPanels) + " paneles.",
 		'headersList' : ['Descripcion','Cantidad','PU','Subtotal material','Mano de obra','Subtotal mano de obra'],
 		'lista' : lista,
 		'titulo2': 'Detalle financiero',
